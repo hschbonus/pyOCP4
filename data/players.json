@@ -1,0 +1,26 @@
+[
+    {
+        "family_name": "Martin",
+        "first_name": "Sophie",
+        "birth_date": "1992-11-15",
+        "national_id": "LM34289"
+    },
+    {
+        "family_name": "Bernard",
+        "first_name": "Thomas",
+        "birth_date": "1985-03-08",
+        "national_id": "KP78923"
+    },
+    {
+        "family_name": "Rousseau",
+        "first_name": "Marie",
+        "birth_date": "1990-07-22",
+        "national_id": "NB45612"
+    },
+    {
+        "family_name": "Leroy",
+        "first_name": "Antoine",
+        "birth_date": "1987-12-03",
+        "national_id": "QW89156"
+    }
+]

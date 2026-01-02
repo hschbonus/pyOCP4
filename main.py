@@ -28,7 +28,7 @@ def menu_principal():
     elif choix == "2":
         sous_menu2()
     elif choix == "3":
-        print('Au revoir')
+        print('A bientôt !\n')
         sys.exit()
     else:
         print("Choix invalide !")
@@ -39,7 +39,7 @@ def sous_menu1():
 
     options = [
         "1. Sous-choix 11",
-        "2. Sous_choix 12",
+        "2. Sous-choix 12",
         "----------------",
         "3. Retourner au menu principal",
         "4. Quitter"
@@ -54,7 +54,7 @@ def sous_menu1():
     elif choix == "3":
         menu_principal()
     elif choix == "4":
-        print('Au revoir')
+        print('A bientôt !\n')
         sys.exit()
     else:
         print("Choix invalide !")
@@ -65,7 +65,7 @@ def sous_menu2():
 
     options = [
         "1. Sous-choix 21",
-        "2. Sous_choix 22",
+        "2. Sous-choix 22",
         "----------------",
         "3. Retourner au menu principal",
         "4. Quitter"
@@ -80,7 +80,7 @@ def sous_menu2():
     elif choix == "3":
         menu_principal()
     elif choix == "4":
-        print('Au revoir\n')
+        print('A bientôt !\n')
         sys.exit()
     else:
         print("Choix invalide !")
