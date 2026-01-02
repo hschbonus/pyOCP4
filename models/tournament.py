@@ -25,4 +25,8 @@ class Tournament:
         self.players.append(player)
 
     def create_round(self, round: Round):
+        if len(self.rounds) >= self.rounds_nb:
+            raise ValueError("Nombre maximum de tours atteint !")
+
         self.rounds.append(round)
+        self.current_round += 1
