@@ -35,5 +35,3 @@ class Match:
     def to_tuple(self):
         return ([self.player1, self.player1_score],
                 [self.player2, self.player2_score])
-
-

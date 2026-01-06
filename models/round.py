@@ -1,3 +1,6 @@
+from match import Match
+
+
 class Round:
     def __init__(self,
                  name,
@@ -7,12 +10,14 @@ class Round:
         if match_list is None:
             match_list = []
         self.name = name
-        self.start_date_time = start_date_time  # Auto-rempli quand le round commence
-        self.end_date_time = end_date_time  # Auto-rempli quand terminé
+        self.start_date_time = start_date_time
+        self.end_date_time = end_date_time
         self.match_list = match_list
 
-    def add_match(self, match):
+    def create_match(self, player1, player2):
+        match = Match(player1, player2)
         self.match_list.append(match)
+        return match
 
     def mark_as_complete(self):
         from datetime import datetime

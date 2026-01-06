@@ -24,9 +24,22 @@ class Tournament:
     def add_player(self, player: Player):
         self.players.append(player)
 
-    def create_round(self, round: Round):
-        if len(self.rounds) >= self.rounds_nb:
-            raise ValueError("Nombre maximum de tours atteint !")
+    def generate_pairs():
+        pass
 
-        self.rounds.append(round)
+    def create_round(self):
+        if len(self.rounds) >= self.rounds_nb:
+            raise ValueError("Nombre maximum de tours atteint")
+
+        round_name = f"Round {self.current_round + 1}"
+        new_round = Round(round_name)
+
+        pairs = self.generate_pairs()
+
+        for player1, player2 in pairs:
+            new_round.create_match(player1, player2)
+
+        self.rounds.append(new_round)
         self.current_round += 1
+
+        return new_round
