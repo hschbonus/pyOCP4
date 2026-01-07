@@ -1,5 +1,6 @@
 from .player import Player
 from .round import Round
+import random
 
 
 class Tournament:
@@ -24,8 +25,15 @@ class Tournament:
     def add_player(self, player: Player):
         self.players.append(player)
 
-    def generate_pairs():
-        pass
+    def generate_pairs(self):
+        random.shuffle(self.players)
+        pairs = []
+        while len(self.players) > 0:
+            pair = (self.players[0], self.players[1])
+            pairs.append(pair)
+            self.players.pop(0)
+            self.players.pop(0)
+        return pairs
 
     def create_round(self):
         if len(self.rounds) >= self.rounds_nb:

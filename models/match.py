@@ -14,6 +14,9 @@ class Match:
         self.winner = winner
         self.is_finished = is_finished
 
+    def __repr__(self):
+        return f"{self.player1} vs {self.player2}"
+
     def set_result(self, winner):
         if winner == 'player1':
             self.is_finished = True
