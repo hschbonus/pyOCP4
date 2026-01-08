@@ -1,5 +1,6 @@
 class Match:
 
+
     def __init__(self,
                  player1,
                  player2,
@@ -18,7 +19,7 @@ class Match:
         return f"{self.player1} vs {self.player2}"
 
     def set_result(self, winner):
-        if winner == 'player1':
+        if winner == 'player1' :
             self.is_finished = True
             self.player1_score = 1
             self.player2_score = 0

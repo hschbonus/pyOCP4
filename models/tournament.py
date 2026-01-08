@@ -46,16 +46,23 @@ class Tournament:
             for player in players_with_score:
                 players_available_for_pairing.append(player[0])
             c = 0
-            while len(players_available_for_pairing) > 2:
-                pairing_result = self.has_played_together(players_available_for_pairing[0], players_available_for_pairing[1+c])
-                if pairing_result :
+            while len(players_available_for_pairing) >= 2 and 1 + c < len(players_available_for_pairing):
+                pairing_result = self.has_played_together(
+                    players_available_for_pairing[0],
+                    players_available_for_pairing[1 + c]
+                )
+                if pairing_result:
                     c += 1
                 else:
-                    pairs.append((players_available_for_pairing[0], players_available_for_pairing[1+c]))
+                    pairs.append((players_available_for_pairing[0], players_available_for_pairing[1 + c]))
+                    players_available_for_pairing.pop(1 + c)
                     players_available_for_pairing.pop(0)
-                    players_available_for_pairing.pop(1+c)
                     c = 0
-            pairs.append((players_available_for_pairing[0], players_available_for_pairing[1]))
+
+            while len(players_available_for_pairing) >= 2:
+                pairs.append((players_available_for_pairing[0], players_available_for_pairing[1]))
+                players_available_for_pairing.pop(1)
+                players_available_for_pairing.pop(0)
         return pairs
 
     def create_round(self):
