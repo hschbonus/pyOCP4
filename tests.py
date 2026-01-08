@@ -1,6 +1,7 @@
 from models.tournament import Tournament
 from models.player import Player
 from models.round import Round
+from models.match import Match
 
 player_list = [
     Player("Dubois", "Marie", "15/03/1995", "AB123456"),
@@ -18,6 +19,5 @@ tournoi_test = Tournament("Tounoi test", '', '', '', 'test')
 for player in player_list:
     tournoi_test.add_player(player)
 
-for pair in tournoi_test.generate_pairs():
-    print(pair)
-
+round1 = tournoi_test.create_round()
+print(round1.match_list)

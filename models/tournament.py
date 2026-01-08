@@ -1,6 +1,6 @@
 from .player import Player
 from .round import Round
-import random
+from .match import Match
 
 
 class Tournament:
@@ -26,13 +26,15 @@ class Tournament:
         self.players.append(player)
 
     def generate_pairs(self):
-        random.shuffle(self.players)
-        pairs = []
-        while len(self.players) > 0:
-            pair = (self.players[0], self.players[1])
-            pairs.append(pair)
-            self.players.pop(0)
-            self.players.pop(0)
+        if self.current_round == 0:
+            players_copy = self.players.copy()
+            random.shuffle(players_copy)
+
+            pairs = []
+            for i in range(0, len(players_copy), 2):
+                pairs.append((players_copy[i], players_copy[i + 1]))
+        else : 
+
         return pairs
 
     def create_round(self):
@@ -51,3 +53,25 @@ class Tournament:
         self.current_round += 1
 
         return new_round
+
+    def has_played_together(self, player1, player2):
+        """Vérifie si deux joueurs ont déjà joué ensemble"""
+
+        for round in self.rounds:
+            for match in round.match_list:
+                if player1 in [match.player1, match.player2] and player2 in [match.player1, match.player2]:
+                    return True
+        return False
+    
+    def get_player_score(self, player):
+        """Calcule le score total d'un joueur dans le tournoi"""
+        total_score = 0
+        
+        for round in self.rounds:
+            for match in round.match_list:
+                if player == match.player
+                # Si le joueur est player2 → ajouter player2_score
+                pass
+        
+        return total_score
+
