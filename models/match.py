@@ -1,6 +1,5 @@
 class Match:
 
-
     def __init__(self,
                  player1,
                  player2,
@@ -16,22 +15,22 @@ class Match:
         self.is_finished = is_finished
 
     def __repr__(self):
-        return f"{self.player1} vs {self.player2}"
+        return f'[  {self.player1.firstname}  ] VS [  {self.player2.firstname}  ]'
 
     def set_result(self, winner):
-        if winner == 'player1' :
+        if winner == '1':
             self.is_finished = True
             self.player1_score = 1
             self.player2_score = 0
-        elif winner == 'player2':
+        elif winner == '2':
             self.is_finished = True
             self.player1_score = 0
             self.player2_score = 1
-        elif winner == 'draw':
+        elif winner == '3':
             self.player1_score = 0.5
             self.player2_score = 0.5
         else:
-            raise ValueError("winner doit être 'player1', 'player2' ou 'draw'")
+            raise ValueError("Veuillez selectionner un des choix ci-dessus !\n")
 
         self.is_finished = True
         self.winner = winner

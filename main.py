@@ -1,5 +1,4 @@
-from .controllers import *
-from .views import *
-from .models import *
+from controllers import controllers
+# from views import views
 
-run_app()
+controllers.main_menu()

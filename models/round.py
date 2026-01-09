@@ -1,18 +1,15 @@
 from .match import Match
+from datetime import datetime
 
 
 class Round:
     def __init__(self,
                  name,
-                 start_date_time=None,
-                 end_date_time=None,
                  match_list=None):
-        if match_list is None:
-            match_list = []
         self.name = name
-        self.start_date_time = start_date_time
-        self.end_date_time = end_date_time
-        self.match_list = match_list
+        self.start_date_time = datetime.now()
+        self.end_date_time = None
+        self.match_list = []
 
     def __repr__(self):
         return f"{self.name}"
@@ -23,5 +20,4 @@ class Round:
         return match
 
     def mark_as_complete(self):
-        from datetime import datetime
         self.end_date_time = datetime.now()
