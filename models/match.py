@@ -17,6 +17,12 @@ class Match:
     def __repr__(self):
         return f'[  {self.player1.firstname}  ] VS [  {self.player2.firstname}  ]'
 
+    def to_dict(self):
+        pass
+
+    def from_dict(self):
+        pass
+
     def set_result(self, winner):
         if winner == '1':
             self.is_finished = True

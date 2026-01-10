@@ -1,3 +1,6 @@
+import json
+
+
 class Player:
 
     def __init__(self, lastname, firstname, birth_date, national_id):
@@ -12,3 +15,28 @@ class Player:
 
     def __repr__(self):
         return f"{self.firstname} {self.lastname}"
+
+    def to_dict(self):
+        player_dict = {
+            'lastname': self.lastname,
+            'firstname': self.firstname,
+            'birth_date': self.birth_date,
+            'national_id': self.national_id,
+        }
+        return player_dict
+
+    @staticmethod
+    def load_from_json():
+        with open('data/players.json', 'r', encoding='utf-8') as file:
+            data = json.load(file)
+        return data
+
+    def save_in_json(self):
+        players_data = []
+        try:
+            players_data.extend(Player.load_from_json())
+        except json.decoder.JSONDecodeError:
+            pass
+        players_data.append(self.to_dict())
+        with open('data/players.json', 'w', encoding='utf-8') as file:
+            json.dump(players_data, file, indent=4, ensure_ascii=False)

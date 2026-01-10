@@ -1,5 +1,4 @@
-from datetime import datetime
-# from controllers import controllers
+from rich import print
 from models.tournament import Tournament
 
 BANNER_LENGTH = 50
@@ -53,7 +52,7 @@ def player_input():
 
 
 def player_added(name, tournoi_name):
-    print(f'\n{name} a bien été inscrit(e) au tournoi {tournoi_name} !\n')
+    print(f'\n[bold]{name}[/] a bien été inscrit(e) au tournoi {tournoi_name} ! :thumbs_up:\n')
 
 
 def all_matchs_from_round_display(round):
@@ -76,7 +75,7 @@ def winner_input(match):
 def leaderboard_display(tournoi):
 
     players_scores = []
-    COLUMN_LENGTH = 20
+    COL_LEN = 20
 
     for player in tournoi.players:
         player_score = tournoi.get_player_score(player)
@@ -89,8 +88,7 @@ def leaderboard_display(tournoi):
         print("\nCLASSEMENT FINAL\n")
     i = 0
     for i in range(0, len(tournoi.players)):
-        print(str(i) + ". " + players_scores[i][0] + ' ' * (COLUMN_LENGTH - len(players_scores[i][0])) + '||  ' +
-              str(players_scores[i][1]))
+        print(f"{i}. {players_scores[i][0]}{' ' * (COL_LEN - len(players_scores[i][0]))}|| {players_scores[i][1]}")
 
 
 def banner(text):
