@@ -1,7 +1,6 @@
 import sys
 from views import views
-from models.tournament import Tournament
-from models.player import Player
+from models import Tournament, Player
 
 
 def main_menu():

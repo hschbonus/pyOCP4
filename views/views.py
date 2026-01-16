@@ -38,6 +38,11 @@ def tournament_input():
                 }
 
 
+def id_input():
+    national_id = input('ID National : ')
+    return national_id
+
+
 def player_input():
     lastname = input('\nNom de famille : ')
     firstname = input('Prénom : ')
