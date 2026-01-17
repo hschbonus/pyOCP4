@@ -25,18 +25,18 @@ class Player:
         }
         return player_dict
 
-    @staticmethod
-    def load_from_json():
-        with open('data/players.json', 'r', encoding='utf-8') as file:
-            data = json.load(file)
-        return data
+    # @staticmethod
+    # def load_from_json():
+    #     with open('data/db.json', 'r', encoding='utf-8') as file:
+    #         data = json.load(file)
+    #     return data
 
-    def save_in_json(self):
-        players_data = []
-        try:
-            players_data.extend(Player.load_from_json())
-        except json.decoder.JSONDecodeError:
-            pass
-        players_data.append(self.to_dict())
-        with open('data/players.json', 'w', encoding='utf-8') as file:
-            json.dump(players_data, file, indent=4, ensure_ascii=False)
+    # def save_in_json(self):
+    #     players_data = []
+    #     try:
+    #         players_data.extend(Player.load_from_json())
+    #     except json.decoder.JSONDecodeError:
+    #         pass
+    #     players_data.append(self.to_dict())
+    #     with open('data/db.json', 'w', encoding='utf-8') as file:
+    #         json.dump(players_data, file, indent=4, ensure_ascii=False)

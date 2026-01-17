@@ -1,6 +1,9 @@
 import sys
+import json
 from views import views
 from models import Tournament, Player
+
+
 
 
 def main_menu():
@@ -42,8 +45,14 @@ def tournament_menu(tournoi: Tournament):
     choix = views.display_menu("MENU TOURNOI", options, tournoi)
 
     if choix == "1":
-        infos_player = views.player_input()
-        new_player = add_player(infos_player, tournoi)
+        national_id = views.id_input()
+        player_exists = does_player_exist(national_id)
+        if player_exists:
+            update_player(national_id)
+        else:
+            create_player(national_id)
+
+
         new_player.save_in_json()
         tournoi.save_in_json()
         tournament_menu(tournoi)
@@ -105,3 +114,32 @@ def add_player(infos_player, tournoi):
     views.player_added(player.firstname, tournoi.name)
     tournoi.save_in_json()
     return player
+
+def does_player_exist(national_id):
+    data = load_from_json()
+    id_list = []
+    for i in range(len(data["players"])):
+        id_list.append(data["players"][i]["national_id"])
+    if national_id in id_list:
+        return True
+    else:
+        return False
+
+def load_from_json():
+    with open('data/db.json', 'r', encoding='utf-8') as file:
+        data = json.load(file)
+    return data
+
+def update_player(national_id):
+    lastname, firstname, birthdate = views.players_data_input()
+    players_data = load_from_json()
+    for player in players_data["players"]:
+        if player["national_id"] == national_id:
+            player["lastname"] = lastname
+            player["firstname"] = firstname
+            player["birth_date"] = birthdate
+            return True
+        else:
+            return False
+
+def create_player(national_id):

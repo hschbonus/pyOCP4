@@ -42,18 +42,21 @@ def id_input():
     national_id = input('ID National : ')
     return national_id
 
-
-def player_input():
+def player_data_input():
     lastname = input('\nNom de famille : ')
     firstname = input('Prénom : ')
     birthdate = input('Date de naissance : ')
-    national_id = input('ID National : ')
 
-    return {'lastname': lastname,
-            'firstname': firstname,
-            'birth_date': birthdate,
-            'national_id': national_id,
-            }
+    return lastname, firstname, birthdate
+
+def update_player():
+    print("Joueur présent dans la BDD, modifier ses données ? :")
+    updated_player = player_data_input()
+    return updated_player
+
+def create_player(national_id):
+    print("Joueur inconnu dans la BDD, entrez les données suivantes :")
+    player_data_input()
 
 
 def player_added(name, tournoi_name):
