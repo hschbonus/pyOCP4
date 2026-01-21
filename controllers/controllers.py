@@ -16,7 +16,7 @@ def main_menu():
 
     if choix == "1":
         tournoi = create_tournament()
-        save_tournament_in_db(tournoi)
+        save_tournament(tournoi)
         tournament_menu(tournoi)
 
     elif choix == "2":
@@ -47,13 +47,14 @@ def tournament_menu(tournoi: Tournament):
         for player in data["players"]:
             if player["national_id"] == national_id:
                 player = update_player(player)
-                add_player_to_tournament(player)
+                add_player_to_tournament(player, tournoi)
                 tournament_menu(tournoi)
+                return True
         new_player = create_player(national_id)
         data["players"].append(new_player)
-        add_player_to_tournament(player, tournoi)
-        # save_all(data)
+        add_player_to_tournament(new_player, tournoi)
         tournament_menu(tournoi)
+        return False
 
     elif choix == "2":
         if tournoi.even_number_of_players():
@@ -107,40 +108,31 @@ def start_tournament(tournoi):
         views.leaderboard_display(tournoi)
 
 
-def add_player_to_tournament(player_dict, tournoi):
-    player = Player.from_dict(player_dict)
+def add_player_to_tournament(player, tournoi):
     tournoi.add_player(player)
-    # save_tournament_in_db(tournoi)
+    save_tournament(tournoi)
     views.player_added(player.firstname, tournoi.name)
 
 
-def save_player(player_to_save):
-    
+# def save_player(player_to_save):
+#     pass
 
 
 def save_tournament(tournament_to_save):
     try:
         data = load_all()
+        tournament_in_dict = tournament_to_save.to_dict()
         for tournoi in data["tournaments"]:
             if tournament_to_save.name in tournoi["name"]:
-                serializable_players = []
-                for player in tournament_to_save.players:
-                    serializable_players.append(Player.to_dict(player))
-
-                serializables_rounds = []
-                for round in tournament_to_save.rounds:
-                    serializables_rounds.append(Round.to_dict(round))
-
-                tournoi['rounds'] = serializables_rounds
+                tournoi['rounds'] = tournament_in_dict["rounds"]
                 tournoi['rounds_nb'] = tournament_to_save.rounds_nb
                 tournoi['current_round'] = tournament_to_save.current_round
-                tournoi['players'] = serializable_players
+                tournoi['players'] = tournament_in_dict["players"]
         else:
-            data["tournaments"].append(tournament_to_save.to_dict())
+            data["tournaments"].append(tournament_in_dict)
 
     except UnboundLocalError:
-
-        data["tournaments"].append(tournament_to_save.to_dict())
+        pass
 
     with open('data/db.json', 'w', encoding='utf-8') as file:
         json.dump(data, file, indent=4, ensure_ascii=False)

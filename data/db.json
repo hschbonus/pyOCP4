@@ -41,13 +41,74 @@
         {
             "name": "test",
             "place": "",
-            "start_date": "2026-01-18 22:01:26",
+            "start_date": "2026-01-21 18:03:25",
             "end_date": null,
             "description": "",
             "rounds": [],
             "rounds_nb": 4,
             "current_round": 1,
-            "players": []
+            "players": [
+                {
+                    "lastname": "",
+                    "firstname": "",
+                    "birth_date": "",
+                    "national_id": "AA123456"
+                }
+            ]
+        },
+        {
+            "name": "test",
+            "place": "",
+            "start_date": "2026-01-21 18:03:25",
+            "end_date": null,
+            "description": "",
+            "rounds": [],
+            "rounds_nb": 4,
+            "current_round": 1,
+            "players": [
+                {
+                    "lastname": "",
+                    "firstname": "",
+                    "birth_date": "",
+                    "national_id": "AA123456"
+                }
+            ]
+        },
+        {
+            "name": "test",
+            "place": "",
+            "start_date": "2026-01-21 18:07:23",
+            "end_date": null,
+            "description": "",
+            "rounds": [],
+            "rounds_nb": 4,
+            "current_round": 1,
+            "players": [
+                {
+                    "lastname": "",
+                    "firstname": "",
+                    "birth_date": "",
+                    "national_id": "AA123456"
+                }
+            ]
+        },
+        {
+            "name": "test",
+            "place": "",
+            "start_date": "2026-01-21 18:07:23",
+            "end_date": null,
+            "description": "",
+            "rounds": [],
+            "rounds_nb": 4,
+            "current_round": 1,
+            "players": [
+                {
+                    "lastname": "",
+                    "firstname": "",
+                    "birth_date": "",
+                    "national_id": "AA123456"
+                }
+            ]
         }
     ],
     "in_progress": []

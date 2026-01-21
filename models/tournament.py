@@ -29,16 +29,24 @@ class Tournament:
                 f"players={len(self.players)})")
 
     def to_dict(self):
+        serializable_players = []
+        for player in self.players:
+            serializable_players.append(Player.to_dict(player))
+
+        serializables_rounds = []
+        for round in self.rounds:
+            serializables_rounds.append(Round.to_dict(round))
+
         tournament_dict = {
             'name': self.name,
             'place': self.place,
             'start_date': str(self.start_date),
             'end_date': self.end_date,
             'description': self.description,
-            'rounds': self.rounds,
+            'rounds': serializables_rounds,
             'rounds_nb': self.rounds_nb,
             'current_round': self.current_round,
-            'players': self.players
+            'players': serializable_players
         }
         return tournament_dict
 
