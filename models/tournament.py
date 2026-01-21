@@ -2,7 +2,7 @@ import random
 from datetime import datetime
 from .player import Player
 from .round import Round
-import json
+# import json
 
 
 class Tournament:
@@ -42,42 +42,11 @@ class Tournament:
         }
         return tournament_dict
 
-    def save_in_json(self):
-        try:
-            tournaments_data = Tournament.load_from_json()
-            tournaments_names = []
-            for tournament in tournaments_data:
-                tournaments_names.append(tournament['name'])
-            if self.name in tournaments_names:
-                index = tournaments_names.index(self.name)
-
-                serializable_players = []
-                for player in self.players:
-                    serializable_players.append(Player.to_dict(player))
-
-                serializables_rounds = []
-                for round in self.rounds:
-                    serializables_rounds.append(Round.to_dict(round))
-
-                tournaments_data[index]['rounds'] = serializables_rounds
-                tournaments_data[index]['rounds_nb'] = self.rounds_nb
-                tournaments_data[index]['current_round'] = self.current_round
-                tournaments_data[index]['players'] = serializable_players
-            else:
-                tournaments_data.append(self.to_dict())
-
-        except json.decoder.JSONDecodeError:
-            tournaments_data = []
-            tournaments_data.append(self.to_dict())
-
-        with open('data/tournaments.json', 'w', encoding='utf-8') as file:
-            json.dump(tournaments_data, file, indent=4, ensure_ascii=False)
-
-    @staticmethod
-    def load_from_json():
-        with open('data/tournaments.json', 'r', encoding='utf-8') as file:
-            data = json.load(file)
-        return data
+    # @staticmethod
+    # def load_from_json():
+    #     with open('data/tournaments.json', 'r', encoding='utf-8') as file:
+    #         data = json.load(file)
+    #     return data
 
     def add_player(self, player: Player):
         """

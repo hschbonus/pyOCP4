@@ -1,4 +1,4 @@
-import json
+# import json
 
 
 class Player:
@@ -24,6 +24,11 @@ class Player:
             'national_id': self.national_id,
         }
         return player_dict
+
+    @staticmethod
+    def from_dict(player_dict):
+        player = Player(**player_dict)
+        return player
 
     # @staticmethod
     # def load_from_json():
