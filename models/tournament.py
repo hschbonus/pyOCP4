@@ -31,11 +31,11 @@ class Tournament:
     def to_dict(self):
         serializable_players = []
         for player in self.players:
-            serializable_players.append(Player.to_dict(player))
+            serializable_players.append(player.to_dict())
 
         serializables_rounds = []
         for round in self.rounds:
-            serializables_rounds.append(Round.to_dict(round))
+            serializables_rounds.append(round.to_dict())
 
         tournament_dict = {
             'name': self.name,
@@ -202,3 +202,6 @@ class Tournament:
             return True
         else:
             return False
+
+    def check_if_in_tournament_already(self, player):
+        return player.national_id in [p.national_id for p in self.players]

@@ -18,7 +18,13 @@ class Match:
         return f'[  {self.player1.firstname}  ] VS [  {self.player2.firstname}  ]'
 
     def to_dict(self):
-        pass
+        match_dict = {
+            "player1": self.player1.firstname,
+            "player2": self.player2.firstname,
+            "player1_score": self.player1_score,
+            "player2_score": self.player2_score
+        }
+        return match_dict
 
     def from_dict(self):
         pass

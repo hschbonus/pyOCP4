@@ -17,7 +17,8 @@ class Round:
     def to_dict(self):
         serializable_match_list = []
         for match in self.match_list:
-            serializable_match_list.append([match.player1.firstname, match.player2.firstname])
+            serializable_match_list.append(match.to_dict())
+
         round_dict = {
             'name': self.name,
             'match_list': serializable_match_list

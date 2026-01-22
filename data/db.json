@@ -41,72 +41,141 @@
         {
             "name": "test",
             "place": "",
-            "start_date": "2026-01-21 18:03:25",
+            "start_date": "2026-01-22 16:15:47",
             "end_date": null,
             "description": "",
-            "rounds": [],
-            "rounds_nb": 4,
-            "current_round": 1,
-            "players": [
+            "rounds": [
                 {
-                    "lastname": "",
-                    "firstname": "",
-                    "birth_date": "",
-                    "national_id": "AA123456"
+                    "name": "test - Round 1",
+                    "match_list": [
+                        {
+                            "player1": "Paul",
+                            "player2": "Françis",
+                            "player1_score": 1,
+                            "player2_score": 0
+                        },
+                        {
+                            "player1": "Marc",
+                            "player2": "Nico",
+                            "player1_score": 0,
+                            "player2_score": 1
+                        },
+                        {
+                            "player1": "Guy",
+                            "player2": "Elsa",
+                            "player1_score": 1,
+                            "player2_score": 0
+                        }
+                    ]
+                },
+                {
+                    "name": "test - Round 2",
+                    "match_list": [
+                        {
+                            "player1": "Paul",
+                            "player2": "Nico",
+                            "player1_score": 1,
+                            "player2_score": 0
+                        },
+                        {
+                            "player1": "Guy",
+                            "player2": "Françis",
+                            "player1_score": 1,
+                            "player2_score": 0
+                        },
+                        {
+                            "player1": "Marc",
+                            "player2": "Elsa",
+                            "player1_score": 1,
+                            "player2_score": 0
+                        }
+                    ]
+                },
+                {
+                    "name": "test - Round 3",
+                    "match_list": [
+                        {
+                            "player1": "Paul",
+                            "player2": "Guy",
+                            "player1_score": 1,
+                            "player2_score": 0
+                        },
+                        {
+                            "player1": "Marc",
+                            "player2": "Françis",
+                            "player1_score": 1,
+                            "player2_score": 0
+                        },
+                        {
+                            "player1": "Nico",
+                            "player2": "Elsa",
+                            "player1_score": 1,
+                            "player2_score": 0
+                        }
+                    ]
+                },
+                {
+                    "name": "test - Round 4",
+                    "match_list": [
+                        {
+                            "player1": "Paul",
+                            "player2": "Marc",
+                            "player1_score": 1,
+                            "player2_score": 0
+                        },
+                        {
+                            "player1": "Nico",
+                            "player2": "Guy",
+                            "player1_score": 1,
+                            "player2_score": 0
+                        },
+                        {
+                            "player1": "Françis",
+                            "player2": "Elsa",
+                            "player1_score": 1,
+                            "player2_score": 0
+                        }
+                    ]
                 }
-            ]
-        },
-        {
-            "name": "test",
-            "place": "",
-            "start_date": "2026-01-21 18:03:25",
-            "end_date": null,
-            "description": "",
-            "rounds": [],
+            ],
             "rounds_nb": 4,
-            "current_round": 1,
+            "current_round": 5,
             "players": [
                 {
-                    "lastname": "",
-                    "firstname": "",
-                    "birth_date": "",
-                    "national_id": "AA123456"
-                }
-            ]
-        },
-        {
-            "name": "test",
-            "place": "",
-            "start_date": "2026-01-21 18:07:23",
-            "end_date": null,
-            "description": "",
-            "rounds": [],
-            "rounds_nb": 4,
-            "current_round": 1,
-            "players": [
+                    "lastname": "Dubois",
+                    "firstname": "Paul",
+                    "birth_date": "15/03/1985",
+                    "national_id": "AB123456"
+                },
                 {
-                    "lastname": "",
-                    "firstname": "",
-                    "birth_date": "",
-                    "national_id": "AA123456"
-                }
-            ]
-        },
-        {
-            "name": "test",
-            "place": "",
-            "start_date": "2026-01-21 18:07:23",
-            "end_date": null,
-            "description": "",
-            "rounds": [],
-            "rounds_nb": 4,
-            "current_round": 1,
-            "players": [
+                    "lastname": "Martin",
+                    "firstname": "Françis",
+                    "birth_date": "22/07/1978",
+                    "national_id": "CD789012"
+                },
                 {
-                    "lastname": "",
-                    "firstname": "",
-                    "birth_date": "",
-                    "national_id": "AA123456"
+                    "lastname": "Lefebvre",
+                    "firstname": "Marc",
+                    "birth_date": "08/11/1992",
+                    "national_id": "EF345678"
+                },
+                {
+                    "lastname": "Rousseau",
+                    "firstname": "Nico",
+                    "birth_date": "30/05/1988",
+                    "national_id": "GH901234"
+                },
+                {
+                    "lastname": "Moreau",
+                    "firstname": "Guy",
+                    "birth_date": "14/09/1975",
+                    "national_id": "IJ567890"
+                },
+                {
+                    "lastname": "Laurent",
+                    "firstname": "Elsa",
+                    "birth_date": "27/01/1995",
+                    "national_id": "KL234567"
                 }
             ]
         }

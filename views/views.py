@@ -52,13 +52,13 @@ def player_data_input():
 
 
 def update_player():
-    print("Joueur présent dans la BDD, modifier ses données ? :")
+    print("\nJoueur présent dans la BDD, modifier ses données ? :")
     lastname, firstname, birthdate = player_data_input()
     return lastname, firstname, birthdate
 
 
 def create_player():
-    print("Joueur inconnu de la BDD, entrez les données suivantes :")
+    print("\nJoueur inconnu de la BDD, entrez les données suivantes :")
     lastname, firstname, birthdate = player_data_input()
     return lastname, firstname, birthdate
 
@@ -76,7 +76,7 @@ def all_matchs_from_round_display(round):
 
 
 def winner_input(match):
-    print('\nRésultat du match entre :')
+    print(f'\nRésultat du match entre {match.player1.firstname} et {match.player2.firstname}:')
     print(f'1 : {match.player1.firstname} est vainqueur')
     print(f'2 : {match.player2.firstname} est vainqueur')
     print('3 : Egalité')
@@ -100,7 +100,7 @@ def leaderboard_display(tournoi):
         print("\nCLASSEMENT FINAL\n")
     i = 0
     for i in range(0, len(tournoi.players)):
-        print(f"{i}. {players_scores[i][0]}{' ' * (COL_LEN - len(players_scores[i][0]))}|| {players_scores[i][1]}")
+        print(f"{i + 1}. {players_scores[i][0]}{' ' * (COL_LEN - len(players_scores[i][0]))}|| {players_scores[i][1]}")
 
 
 def banner(text):
@@ -128,3 +128,7 @@ def rounds_and_matchs_report(tournoi):
         print(f"\n{round}\n")
         for match in round.match_list:
             print(f"    {match}")
+
+
+def tournament_already_exists(name):
+    print(f"\nLe tournoi {name} existe déjà, veuillez entrer un autre nom svp.")
