@@ -19,15 +19,22 @@ class Match:
 
     def to_dict(self):
         match_dict = {
-            "player1": self.player1.firstname,
-            "player2": self.player2.firstname,
+            "player1": self.player1.national_id,
+            "player2": self.player2.national_id,
             "player1_score": self.player1_score,
             "player2_score": self.player2_score
         }
         return match_dict
 
-    def from_dict(self):
-        pass
+    @classmethod
+    def from_dict(cls, match_dict):
+        match = cls(
+            player1=match_dict["player1"],
+            player2=match_dict["player2"],
+            player1_score=match_dict["player1_score"],
+            player2_score=match_dict["player2_score"]
+        )
+        return match
 
     def set_result(self, winner):
         if winner == '1':

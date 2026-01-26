@@ -39,99 +39,107 @@
     ],
     "tournaments": [
         {
-            "name": "test",
+            "name": "",
             "place": "",
-            "start_date": "2026-01-22 16:15:47",
-            "end_date": null,
+            "start_date": "2026-01-26 16:59:54",
+            "end_date": "2026-01-26 17:00:07",
             "description": "",
             "rounds": [
                 {
-                    "name": "test - Round 1",
+                    "name": " - Round 1",
+                    "start_date_time": "2026-01-26 16:59:59",
+                    "end_date_time": "2026-01-26 17:00:01",
                     "match_list": [
                         {
-                            "player1": "Paul",
-                            "player2": "Françis",
+                            "player1": "AB123456",
+                            "player2": "CD789012",
                             "player1_score": 1,
                             "player2_score": 0
                         },
                         {
-                            "player1": "Marc",
-                            "player2": "Nico",
-                            "player1_score": 0,
-                            "player2_score": 1
+                            "player1": "EF345678",
+                            "player2": "GH901234",
+                            "player1_score": 1,
+                            "player2_score": 0
                         },
                         {
-                            "player1": "Guy",
-                            "player2": "Elsa",
+                            "player1": "IJ567890",
+                            "player2": "KL234567",
                             "player1_score": 1,
                             "player2_score": 0
                         }
                     ]
                 },
                 {
-                    "name": "test - Round 2",
+                    "name": " - Round 2",
+                    "start_date_time": "2026-01-26 17:00:01",
+                    "end_date_time": "2026-01-26 17:00:03",
                     "match_list": [
                         {
-                            "player1": "Paul",
-                            "player2": "Nico",
+                            "player1": "AB123456",
+                            "player2": "EF345678",
                             "player1_score": 1,
                             "player2_score": 0
                         },
                         {
-                            "player1": "Guy",
-                            "player2": "Françis",
+                            "player1": "IJ567890",
+                            "player2": "CD789012",
                             "player1_score": 1,
                             "player2_score": 0
                         },
                         {
-                            "player1": "Marc",
-                            "player2": "Elsa",
+                            "player1": "GH901234",
+                            "player2": "KL234567",
                             "player1_score": 1,
                             "player2_score": 0
                         }
                     ]
                 },
                 {
-                    "name": "test - Round 3",
+                    "name": " - Round 3",
+                    "start_date_time": "2026-01-26 17:00:03",
+                    "end_date_time": "2026-01-26 17:00:05",
                     "match_list": [
                         {
-                            "player1": "Paul",
-                            "player2": "Guy",
+                            "player1": "AB123456",
+                            "player2": "IJ567890",
                             "player1_score": 1,
                             "player2_score": 0
                         },
                         {
-                            "player1": "Marc",
-                            "player2": "Françis",
+                            "player1": "EF345678",
+                            "player2": "CD789012",
                             "player1_score": 1,
                             "player2_score": 0
                         },
                         {
-                            "player1": "Nico",
-                            "player2": "Elsa",
+                            "player1": "GH901234",
+                            "player2": "KL234567",
                             "player1_score": 1,
                             "player2_score": 0
                         }
                     ]
                 },
                 {
-                    "name": "test - Round 4",
+                    "name": " - Round 4",
+                    "start_date_time": "2026-01-26 17:00:05",
+                    "end_date_time": "2026-01-26 17:00:07",
                     "match_list": [
                         {
-                            "player1": "Paul",
-                            "player2": "Marc",
+                            "player1": "AB123456",
+                            "player2": "GH901234",
                             "player1_score": 1,
                             "player2_score": 0
                         },
                         {
-                            "player1": "Nico",
-                            "player2": "Guy",
+                            "player1": "EF345678",
+                            "player2": "IJ567890",
                             "player1_score": 1,
                             "player2_score": 0
                         },
                         {
-                            "player1": "Françis",
-                            "player2": "Elsa",
+                            "player1": "CD789012",
+                            "player2": "KL234567",
                             "player1_score": 1,
                             "player2_score": 0
                         }
@@ -178,7 +186,17 @@
                     "national_id": "KL234567"
                 }
             ]
+        },
+        {
+            "name": "Test 2",
+            "place": "Stras",
+            "start_date": "2026-01-26 20:10:45",
+            "end_date": "None",
+            "description": "",
+            "rounds": [],
+            "rounds_nb": 4,
+            "current_round": 1,
+            "players": []
         }
-    ],
-    "in_progress": []
+    ]
 }

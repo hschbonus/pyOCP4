@@ -2,7 +2,7 @@ import random
 from datetime import datetime
 from .player import Player
 from .round import Round
-# import json
+from .match import Match
 
 
 class Tournament:
@@ -41,7 +41,7 @@ class Tournament:
             'name': self.name,
             'place': self.place,
             'start_date': str(self.start_date),
-            'end_date': self.end_date,
+            'end_date': str(self.end_date),
             'description': self.description,
             'rounds': serializables_rounds,
             'rounds_nb': self.rounds_nb,
@@ -50,11 +50,65 @@ class Tournament:
         }
         return tournament_dict
 
-    # @staticmethod
-    # def load_from_json():
-    #     with open('data/tournaments.json', 'r', encoding='utf-8') as file:
-    #         data = json.load(file)
-    #     return data
+    @classmethod
+    def from_dict(cls, tournament_dict):
+        """
+        Reconstruit un objet Tournament depuis un dictionnaire JSON.
+        Gère la désérialisation imbriquée des Players, Rounds et Matchs.
+        """
+        players = [Player.from_dict(p) for p in tournament_dict["players"]]
+
+        tournament = cls(
+            name=tournament_dict["name"],
+            place=tournament_dict["place"],
+            description=tournament_dict["description"],
+            rounds_nb=tournament_dict["rounds_nb"]
+        )
+
+        def find_player(national_id):
+            for player in players:
+                if player.national_id == national_id:
+                    return player
+            raise ValueError(f"Player with national_id {national_id} not found")
+
+        rounds = []
+        for round_dict in tournament_dict["rounds"]:
+            round_obj = Round(name=round_dict["name"])
+
+            round_obj.start_date_time = datetime.fromisoformat(round_dict["start_date_time"])
+
+            if round_dict["end_date_time"] and round_dict["end_date_time"] != "None":
+                round_obj.end_date_time = datetime.fromisoformat(round_dict["end_date_time"])
+            else:
+                round_obj.end_date_time = None
+
+            for match_dict in round_dict["match_list"]:
+                player1 = find_player(match_dict["player1"])
+                player2 = find_player(match_dict["player2"])
+
+                match = Match(
+                    player1=player1,
+                    player2=player2,
+                    player1_score=match_dict["player1_score"],
+                    player2_score=match_dict["player2_score"]
+                )
+
+                round_obj.match_list.append(match)
+
+            rounds.append(round_obj)
+
+        tournament.players = players
+        tournament.rounds = rounds
+        tournament.current_round = len(rounds) + 1
+
+        tournament.start_date = datetime.fromisoformat(tournament_dict["start_date"])
+
+        if tournament_dict["end_date"] and tournament_dict["end_date"] != "None":
+            tournament.end_date = datetime.fromisoformat(tournament_dict["end_date"])
+        else:
+            tournament.end_date = None
+
+        return tournament
 
     def add_player(self, player: Player):
         """
@@ -141,7 +195,6 @@ class Tournament:
 
         self.rounds.append(new_round)
         self.current_round += 1
-
         return new_round
 
     def has_played_together(self, player1, player2):
@@ -190,18 +243,21 @@ class Tournament:
 
         return total_score
 
-    def even_number_of_players(self):
-
-        """
-        Teste si le nombre de joueurs est pair
-
-        Return True si oui, False si non
-        """
-
-        if len(self.players) % 2 == 0:
-            return True
-        else:
-            return False
-
     def check_if_in_tournament_already(self, player):
         return player.national_id in [p.national_id for p in self.players]
+
+    @staticmethod
+    def create_players_by_id(tournament_dict, national_id):
+        for player in tournament_dict["players"]:
+            if player["national_id"] == national_id:
+                player_created = Player(
+                    lastname=player["lastname"],
+                    firstname=player["firstname"],
+                    birth_date=player["birth_date"],
+                    national_id=player["national_id"]
+                )
+                return player_created
+        return None
+
+    def mark_as_complete(self):
+        self.end_date = datetime.now().replace(microsecond=0)

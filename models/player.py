@@ -27,7 +27,7 @@ class Player:
 
     @classmethod
     def from_dict(cls, player_dict):
-        player = Player(**player_dict)
+        player = cls(**player_dict)
         return player
 
     # @staticmethod

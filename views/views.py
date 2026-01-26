@@ -1,5 +1,6 @@
 from rich import print
 from models.tournament import Tournament
+from models.player import Player
 
 BANNER_LENGTH = 50
 
@@ -9,8 +10,9 @@ def display_menu(titre, options, tournoi: Tournament):
     banner(titre)
 
     if tournoi:
-        print(f'Tournoi en cours : {tournoi.name}')
-        print(f'Nombre de joueurs inscrits : {len(tournoi.players)}\n')
+        print(f"Tournoi en cours : {tournoi.name}")
+        print(f"Date de création : {tournoi.start_date}")
+        print(f"Nombre de joueurs inscrits : {len(tournoi.players)}\n")
 
     for option in options:
         print(option)
@@ -64,7 +66,7 @@ def create_player():
 
 
 def player_added(name, tournoi_name):
-    print(f'\n[bold]{name}[/] a bien été inscrit(e) au tournoi {tournoi_name} ! :thumbs_up:\n')
+    print(f'\n[bold]{name}[/] a bien été inscrit(e) au tournoi {tournoi_name} ! :thumbs_up:')
 
 
 def all_matchs_from_round_display(round):
@@ -94,7 +96,7 @@ def leaderboard_display(tournoi):
         players_scores.append([player.firstname, player_score])
     players_scores.sort(key=lambda x: x[1], reverse=True)
 
-    if tournoi.current_round - 1 < tournoi.rounds_nb:
+    if tournoi.current_round < tournoi.rounds_nb + 1:
         print(f"\nCLASSEMENT A L'ISSUE DU ROUND {tournoi.current_round - 1}\n")
     else:
         print("\nCLASSEMENT FINAL\n")
@@ -116,9 +118,8 @@ def banner(text):
 def players_report(tournoi):
 
     print(f"\nJoueurs inscrits dans le tournoi {tournoi.name} :\n")
-    players_copy = tournoi.players
-    for player in players_copy:
-        print(player.firstname)
+    for player in tournoi.players:
+        print(player)
 
 
 def rounds_and_matchs_report(tournoi):
@@ -132,3 +133,49 @@ def rounds_and_matchs_report(tournoi):
 
 def tournament_already_exists(name):
     print(f"\nLe tournoi {name} existe déjà, veuillez entrer un autre nom svp.")
+
+
+def resume_tournament(tournoi):
+    print(f"\nReprise du tournoi en cours : {tournoi.name}")
+    print(f"Round {tournoi.current_round - 1} en cours.")
+
+
+def tournament_is_over():
+    print("Ce tournoin est déjà terminé !")
+
+
+def all_players_in_db_report(data):
+    if data["players"]:
+        banner("LISTE DES JOUEURS")
+        print(f"Total : {len(data["players"])}\n")
+        for player_dict in data["players"]:
+            player = Player.from_dict(player_dict)
+            print(player)
+        print()
+    else:
+        print("\nAucun joueur à afficher !\n")
+
+
+def all_tournaments_in_db_report(data):
+    if len(data["tournaments"]) != 0:
+        banner("LISTE DES TOURNOIS")
+        for tournament in data["tournaments"]:
+            print(tournament["name"])
+    else:
+        print("\nAucun tournoi à afficher !\n")
+
+
+def exit():
+    print("A bientôt !\n")
+
+
+def invalid():
+    print("Choix invalide !\n")
+
+
+def player_not_even():
+    print("\nLe nombre de joueurs doit être pair !")
+
+
+def no_players():
+    print("\nLe tournoi ne peut pas commencer sans joueurs.")

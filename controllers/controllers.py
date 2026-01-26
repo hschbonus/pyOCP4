@@ -4,12 +4,28 @@ from views import views
 from models import Tournament, Player
 
 
+def start():
+    current_tournament = get_current_tournament()
+    if current_tournament and len(current_tournament.rounds) != 0:
+        views.resume_tournament(current_tournament)
+        resume_tournament_menu(current_tournament)
+
+    elif current_tournament and len(current_tournament.rounds) == 0:
+        views.resume_tournament(current_tournament)
+        tournament_menu(current_tournament)
+
+    else:
+        main_menu()
+
+
 def main_menu():
 
     options = [
         "1. Créer un nouveau tournoi",
+        "2. Consulter la liste des joueurs",
+        "3. Consulter la liste des tournois",
         "-------------------",
-        "2. Quitter"
+        "4. Quitter"
     ]
 
     choix = views.display_menu("MENU PRINCIPAL", options, '')
@@ -20,10 +36,20 @@ def main_menu():
         tournament_menu(tournoi)
 
     elif choix == "2":
-        print('A bientôt !\n')
+        data = load_all()
+        views.all_players_in_db_report(data)
+        main_menu()
+
+    elif choix == "3":
+        data = load_all()
+        views.all_tournaments_in_db_report(data)
+        main_menu()
+
+    elif choix == "4":
+        views.exit()
         sys.exit()
     else:
-        print("Choix invalide !")
+        views.invalid()
         main_menu()
 
 
@@ -50,11 +76,8 @@ def tournament_menu(tournoi: Tournament):
         tournament_menu(tournoi)
 
     elif choix == "2":
-        if tournoi.even_number_of_players():
-            start_tournament(tournoi)
-        else:
-            raise ValueError('Le nombre de joueurs inscrits doit être pair !')
-        tournament_menu(tournoi)
+        tournament_start_check(tournoi)
+        start_tournament(tournoi)
 
     elif choix == "3":
         views.players_report(tournoi)
@@ -84,6 +107,39 @@ def tournament_menu(tournoi: Tournament):
         tournament_menu(tournoi)
 
 
+def resume_tournament_menu(tournoi: Tournament):
+
+    options = [
+        "1. Continuer le tournoi",
+        "2. Consulter la liste des joueurs",
+        "3. Consulter la liste des rounds et matchs",
+        "-------------------",
+        "4. Quitter le programme"
+    ]
+
+    choix = views.display_menu("MENU TOURNOI", options, tournoi)
+
+    if choix == "1":
+        tournament_start_check(tournoi)
+        resume_tournament(tournoi)
+
+    elif choix == "2":
+        views.players_report(tournoi)
+        resume_tournament_menu(tournoi)
+
+    elif choix == "3":
+        views.rounds_and_matchs_report(tournoi)
+        resume_tournament_menu(tournoi)
+
+    elif choix == "4":
+        print('A bientôt !\n')
+        sys.exit()
+
+    else:
+        print("Choix invalide !")
+        resume_tournament_menu(tournoi)
+
+
 def create_tournament():
     data = load_all()
     infos_tournoi = views.tournament_input()
@@ -105,6 +161,45 @@ def start_tournament(tournoi):
             save_tournament(tournoi)
         round.mark_as_complete()
         views.leaderboard_display(tournoi)
+    tournoi.mark_as_complete()
+    save_tournament(tournoi)
+    main_menu(tournoi)
+
+
+def resume_tournament(tournoi):
+    """
+    Reprend un tournoi là où il s'était arrêté.
+    Si le dernier round n'est pas terminé, on le termine.
+    Puis on continue avec les rounds suivants.
+    """
+    if tournoi.rounds and tournoi.rounds[-1].end_date_time is None:
+        current_round = tournoi.rounds[-1]
+        views.all_matchs_from_round_display(current_round)
+
+        for match in current_round.match_list:
+            winner = views.winner_input(match)
+            match.set_result(winner)
+
+        current_round.mark_as_complete()
+        save_tournament(tournoi)
+
+        views.leaderboard_display(tournoi)
+
+    while len(tournoi.rounds) < tournoi.rounds_nb:
+        round = tournoi.create_round()
+        save_tournament(tournoi)
+        views.all_matchs_from_round_display(round)
+
+        for match in round.match_list:
+            winner = views.winner_input(match)
+            match.set_result(winner)
+
+        round.mark_as_complete()
+        save_tournament(tournoi)
+        views.leaderboard_display(tournoi)
+    tournoi.mark_as_complete()
+    save_tournament(tournoi)
+    main_menu()
 
 
 def add_player_to_tournament(player, tournoi):
@@ -121,6 +216,7 @@ def save_tournament(tournament_to_save):
     for tournoi in data["tournaments"]:
         if tournament_to_save.name == tournoi["name"]:
             tournoi['rounds'] = tournament_dict["rounds"]
+            tournoi['end_date'] = tournament_dict["end_date"]
             tournoi['rounds_nb'] = tournament_dict["rounds_nb"]
             tournoi['current_round'] = tournament_dict["current_round"]
             tournoi['players'] = tournament_dict["players"]
@@ -181,3 +277,25 @@ def save_player(national_id):
         with open('data/db.json', 'w', encoding='utf-8') as file:
             json.dump(data, file, indent=4, ensure_ascii=False)
         return new_player
+
+
+def get_current_tournament():
+    data = load_all()
+    end_dates = [t["end_date"] for t in data["tournaments"]]
+    if "None" in end_dates:
+        i = end_dates.index("None")
+        tournoi = Tournament.from_dict(data["tournaments"][i])
+        return tournoi
+
+
+def tournament_start_check(tournoi):
+    if len(tournoi.players) % 2 != 0:
+        views.player_not_even()
+        tournament_menu(tournoi)
+    elif len(tournoi.players) == 0:
+        views.no_players()
+        tournament_menu(tournoi)
+    elif len(tournoi.rounds) >= tournoi.rounds_nb:
+        views.tournament_is_over()
+    else:
+        pass

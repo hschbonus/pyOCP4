@@ -1,0 +1,41 @@
+{
+    "players": [
+        {
+            "lastname": "Dubois",
+            "firstname": "Paul",
+            "birth_date": "15/03/1985",
+            "national_id": "AB123456"
+        },
+        {
+            "lastname": "Martin",
+            "firstname": "Françis",
+            "birth_date": "22/07/1978",
+            "national_id": "CD789012"
+        },
+        {
+            "lastname": "Lefebvre",
+            "firstname": "Marc",
+            "birth_date": "08/11/1992",
+            "national_id": "EF345678"
+        },
+        {
+            "lastname": "Rousseau",
+            "firstname": "Nico",
+            "birth_date": "30/05/1988",
+            "national_id": "GH901234"
+        },
+        {
+            "lastname": "Moreau",
+            "firstname": "Guy",
+            "birth_date": "14/09/1975",
+            "national_id": "IJ567890"
+        },
+        {
+            "lastname": "Laurent",
+            "firstname": "Elsa",
+            "birth_date": "27/01/1995",
+            "national_id": "KL234567"
+        }
+    ],
+    "tournaments": []
+}
