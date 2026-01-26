@@ -5,6 +5,14 @@ from models import Tournament, Player
 
 
 def start():
+    """
+    Point d'entrée de l'application.
+
+    Vérifie s'il existe un tournoi en cours et redirige vers le menu approprié :
+    - Si un tournoi est en cours avec des rounds, affiche le menu de reprise.
+    - Si un tournoi est en cours sans rounds, affiche le menu tournoi.
+    - Sinon, affiche le menu principal.
+    """
     current_tournament = get_current_tournament()
     if current_tournament and len(current_tournament.rounds) != 0:
         views.resume_tournament(current_tournament)
@@ -19,7 +27,9 @@ def start():
 
 
 def main_menu():
-
+    """
+    Affiche et gère le menu principal de l'application.
+    """
     options = [
         "1. Créer un nouveau tournoi",
         "2. Consulter la liste des joueurs",
@@ -54,7 +64,12 @@ def main_menu():
 
 
 def tournament_menu(tournoi: Tournament):
+    """
+    Affiche et gère le menu d'un tournoi avant son démarrage.
 
+    Args:
+        tournoi: Instance du tournoi à gérer.
+    """
     options = [
         "1. Ajouter un joueur",
         "2. Commencer le tournoi",
@@ -108,7 +123,12 @@ def tournament_menu(tournoi: Tournament):
 
 
 def resume_tournament_menu(tournoi: Tournament):
+    """
+    Affiche et gère le menu de reprise d'un tournoi en cours.
 
+    Args:
+        tournoi: Instance du tournoi à reprendre.
+    """
     options = [
         "1. Continuer le tournoi",
         "2. Consulter la liste des joueurs",
@@ -141,6 +161,15 @@ def resume_tournament_menu(tournoi: Tournament):
 
 
 def create_tournament():
+    """
+    Crée un nouveau tournoi avec les informations saisies par l'utilisateur.
+
+    Vérifie que le nom du tournoi n'existe pas déjà dans la base de données.
+    Si le nom existe, demande à l'utilisateur de ressaisir les informations.
+
+    Returns:
+        Tournament: Instance du nouveau tournoi créé.
+    """
     data = load_all()
     infos_tournoi = views.tournament_input()
     while infos_tournoi["name"] in [tournament["name"] for tournament in data["tournaments"]]:
@@ -151,6 +180,18 @@ def create_tournament():
 
 
 def start_tournament(tournoi):
+    """
+    Démarre et exécute un tournoi du début jusqu'à la fin.
+
+    Pour chaque round :
+    - Crée le round et génère les matchs
+    - Affiche les matchs à jouer
+    - Demande le résultat de chaque match
+    - Affiche le classement après chaque round
+
+    Args:
+        tournoi: Instance du tournoi à démarrer.
+    """
     while len(tournoi.rounds) < tournoi.rounds_nb:
         round = tournoi.create_round()
         views.all_matchs_from_round_display(round)
@@ -203,6 +244,13 @@ def resume_tournament(tournoi):
 
 
 def add_player_to_tournament(player, tournoi):
+    """
+    Ajoute un joueur à un tournoi s'il n'y est pas déjà inscrit.
+
+    Args:
+        player: Instance du joueur à ajouter.
+        tournoi: Instance du tournoi concerné.
+    """
     if not tournoi.check_if_in_tournament_already(player):
         tournoi.add_player(player)
     save_tournament(tournoi)
@@ -210,6 +258,16 @@ def add_player_to_tournament(player, tournoi):
 
 
 def save_tournament(tournament_to_save):
+    """
+    Sauvegarde un tournoi dans la base de données JSON.
+
+    Si le tournoi existe déjà (même nom), met à jour ses données.
+    Sinon, l'ajoute à la liste des tournois.
+    Synchronise également les informations des joueurs.
+
+    Args:
+        tournament_to_save: Instance du tournoi à sauvegarder.
+    """
     data = load_all()
     tournament_dict = tournament_to_save.to_dict()
     check_if_players_updates(data, tournament_to_save)
@@ -229,6 +287,11 @@ def save_tournament(tournament_to_save):
 
 
 def check_if_players_updates(data, tournoi):
+    """
+    Synchronise les infos des joueurs dans TOUS les tournois avec la DB.
+    Met à jour non seulement le tournoi en cours, mais aussi tous les autres
+    tournois sauvegardés dans data["tournaments"].
+    """
     all_ids = [player["national_id"] for player in data["players"]]
     for player in tournoi.players:
         if player.national_id in all_ids:
@@ -237,19 +300,53 @@ def check_if_players_updates(data, tournoi):
             player.firstname = data["players"][i]["firstname"]
             player.birth_date = data["players"][i]["birth_date"]
 
+    for tournament_dict in data["tournaments"]:
+        for player_dict in tournament_dict["players"]:
+            if player_dict["national_id"] in all_ids:
+                i = all_ids.index(player_dict["national_id"])
+                player_dict["lastname"] = data["players"][i]["lastname"]
+                player_dict["firstname"] = data["players"][i]["firstname"]
+                player_dict["birth_date"] = data["players"][i]["birth_date"]
+
 
 def load_all():
+    """
+    Charge toutes les données depuis le fichier JSON de la base de données.
+
+    Returns:
+        dict: Dictionnaire contenant les clés 'players' et 'tournaments'.
+    """
     with open('data/db.json', 'r', encoding='utf-8') as file:
         data = json.load(file)
     return data
 
 
 def mark_as_current(tournoi):
+    """
+    Marque un tournoi comme étant le tournoi en cours.
 
+    Args:
+        tournoi: Instance du tournoi à marquer comme actif.
+
+    Note:
+        Fonction non implémentée.
+    """
     pass
 
 
 def save_player(national_id):
+    """
+    Sauvegarde ou met à jour un joueur dans la base de données.
+
+    Si le joueur existe (identifiant national trouvé), propose de mettre à jour
+    ses informations. Sinon, crée un nouveau joueur avec les informations saisies.
+
+    Args:
+        national_id: Identifiant national du joueur (ex: 'AB12345').
+
+    Returns:
+        Player: Instance du joueur créé ou mis à jour.
+    """
     data = load_all()
     for player_dict in data["players"]:
         if national_id == player_dict["national_id"]:
@@ -280,6 +377,14 @@ def save_player(national_id):
 
 
 def get_current_tournament():
+    """
+    Récupère le tournoi en cours (non terminé) depuis la base de données.
+
+    Un tournoi est considéré comme en cours si sa date de fin est 'None'.
+
+    Returns:
+        Tournament | None: Instance du tournoi en cours, ou None si aucun.
+    """
     data = load_all()
     end_dates = [t["end_date"] for t in data["tournaments"]]
     if "None" in end_dates:
@@ -289,6 +394,20 @@ def get_current_tournament():
 
 
 def tournament_start_check(tournoi):
+    """
+    Vérifie si un tournoi peut être démarré ou continué.
+
+    Conditions vérifiées :
+    - Le nombre de joueurs doit être pair
+    - Il doit y avoir au moins un joueur
+    - Le tournoi ne doit pas être déjà terminé
+
+    Si une condition n'est pas remplie, redirige vers le menu tournoi
+    avec un message d'erreur approprié.
+
+    Args:
+        tournoi: Instance du tournoi à vérifier.
+    """
     if len(tournoi.players) % 2 != 0:
         views.player_not_even()
         tournament_menu(tournoi)

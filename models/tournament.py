@@ -12,6 +12,15 @@ class Tournament:
                  place,
                  description,
                  rounds_nb=4):
+        """
+        Initialise un nouveau tournoi.
+
+        Args:
+            name (str): Nom du tournoi.
+            place (str): Lieu du tournoi.
+            description (str): Description du tournoi.
+            rounds_nb (int, optional): Nombre de rounds. Defaults to 4.
+        """
         self.name = name
         self.place = place
         self.start_date = datetime.now().replace(microsecond=0)
@@ -23,12 +32,25 @@ class Tournament:
         self.players = []
 
     def __repr__(self):
+        """
+        Retourne une représentation détaillée du tournoi.
+
+        Returns:
+            str: Chaîne formatée avec les informations du tournoi.
+        """
         return (f"Tournament(name='{self.name}', place='{self.place}', "
                 f"start_date='{self.start_date}', end_date='{self.end_date}', "
                 f"rounds_nb={self.rounds_nb}, current_round={self.current_round}, "
                 f"players={len(self.players)})")
 
     def to_dict(self):
+        """
+        Convertit l'objet Tournament en dictionnaire sérialisable.
+
+        Returns:
+            dict: Dictionnaire contenant tous les attributs du tournoi,
+                  incluant les joueurs et rounds sérialisés.
+        """
         serializable_players = []
         for player in self.players:
             serializable_players.append(player.to_dict())
@@ -244,10 +266,29 @@ class Tournament:
         return total_score
 
     def check_if_in_tournament_already(self, player):
+        """
+        Vérifie si un joueur est déjà inscrit au tournoi.
+
+        Args:
+            player (Player): Le joueur à vérifier.
+
+        Returns:
+            bool: True si le joueur est déjà inscrit, False sinon.
+        """
         return player.national_id in [p.national_id for p in self.players]
 
     @staticmethod
     def create_players_by_id(tournament_dict, national_id):
+        """
+        Crée un objet Player à partir d'un dictionnaire de tournoi et d'un ID national.
+
+        Args:
+            tournament_dict (dict): Dictionnaire contenant les données du tournoi.
+            national_id (str): Identifiant national du joueur à créer.
+
+        Returns:
+            Player: Instance du joueur trouvé, ou None si non trouvé.
+        """
         for player in tournament_dict["players"]:
             if player["national_id"] == national_id:
                 player_created = Player(
@@ -260,4 +301,7 @@ class Tournament:
         return None
 
     def mark_as_complete(self):
+        """
+        Marque le tournoi comme terminé en enregistrant la date de fin.
+        """
         self.end_date = datetime.now().replace(microsecond=0)

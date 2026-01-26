@@ -1,10 +1,8 @@
-"""Script de test rapide pour le tournoi avec 6 joueurs."""
-
 from models.tournament import Tournament
 from models.player import Player
 from datetime import datetime
+import random
 
-# Créer un tournoi
 tournoi = Tournament(
     name="Tournoi Test",
     place="Paris",
@@ -14,7 +12,6 @@ tournoi = Tournament(
     rounds_nb=2
 )
 
-# Ajouter 6 joueurs rapidement
 joueurs = [
     Player("Dupont", "Alice", "01/01/1990", "AB12345"),
     Player("Martin", "Bob", "02/02/1991", "CD23456"),
@@ -33,7 +30,6 @@ print("\nJoueurs inscrits :")
 for joueur in tournoi.players:
     print(f"  - {joueur.firstname}")
 
-# Lancer le premier round
 print("\n=== Lancement du Round 1 ===")
 round1 = tournoi.create_round()
 
@@ -41,8 +37,6 @@ print("\nMatchs :")
 for match in round1.match_list:
     print(match)
 
-# Simuler des résultats aléatoires
-import random
 for match in round1.match_list:
     result = random.choice(['player1', 'player2', 'draw'])
     match.set_result(result)
@@ -50,7 +44,6 @@ for match in round1.match_list:
 
 round1.mark_as_complete()
 
-# Afficher le classement
 print("\n=== CLASSEMENT ===")
 players_scores = []
 for player in tournoi.players:
