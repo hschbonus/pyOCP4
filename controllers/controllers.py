@@ -204,7 +204,7 @@ def start_tournament(tournoi):
         views.leaderboard_display(tournoi)
     tournoi.mark_as_complete()
     save_tournament(tournoi)
-    main_menu(tournoi)
+    main_menu()
 
 
 def resume_tournament(tournoi):

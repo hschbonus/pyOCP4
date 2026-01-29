@@ -113,7 +113,7 @@ def player_added(name, tournoi_name):
         name (str): Nom du joueur inscrit.
         tournoi_name (str): Nom du tournoi.
     """
-    print(f'\n[bold]{name}[/] a bien été inscrit(e) au tournoi {tournoi_name} ! :thumbs_up:')
+    print(f'\n{name} a bien été inscrit(e) au tournoi {tournoi_name} !')
 
 
 def all_matchs_from_round_display(round):
@@ -269,6 +269,11 @@ def all_tournaments_in_db_report(data):
         banner("LISTE DES TOURNOIS")
         for tournament in data["tournaments"]:
             print(tournament["name"])
+            print(f"Date de création : {tournament["start_date"]}")
+            if tournament["end_date"] == "None":
+                print("En cours")
+            else:
+                print(f"Date de fin : {tournament["end_date"]}\n")
     else:
         print("\nAucun tournoi à afficher !\n")
 
