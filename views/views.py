@@ -274,6 +274,8 @@ def all_tournaments_in_db_report(data):
                 print("En cours")
             else:
                 print(f"Date de fin : {tournament["end_date"]}\n")
+            t = Tournament.from_dict(tournament)
+            rounds_and_matchs_report(t)
     else:
         print("\nAucun tournoi à afficher !\n")
 
